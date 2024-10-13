@@ -1,12 +1,13 @@
 // frontend/src/components/Auth/Login.js
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { login } = useContext(AuthContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     username: '',
@@ -24,11 +25,13 @@ const Login = () => {
     setError('');
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`, form);
+      const res = await api.post('/api/auth/login', form);
       login(res.data.token, res.data.user);
-      history.push('/dashboard');
+      toast.success('Login successful!');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
+      toast.error(err.response?.data?.message || 'Login failed');
     }
   };
 
@@ -38,10 +41,22 @@ const Login = () => {
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>Username:</label>
-        <input type="text" name="username" value={form.username} onChange={handleChange} required />
+        <input 
+          type="text" 
+          name="username" 
+          value={form.username} 
+          onChange={handleChange} 
+          required 
+        />
 
         <label>Password:</label>
-        <input type="password" name="password" value={form.password} onChange={handleChange} required />
+        <input 
+          type="password" 
+          name="password" 
+          value={form.password} 
+          onChange={handleChange} 
+          required 
+        />
 
         <button type="submit">Login</button>
       </form>

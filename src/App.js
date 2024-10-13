@@ -1,6 +1,6 @@
 // frontend/src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import AuthProvider, { AuthContext } from './contexts/AuthContext';
 import Navbar from './components/Layout/Navbar';
@@ -9,16 +9,9 @@ import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Dashboard from './pages/Dashboard';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ children }) => {
   const { auth } = React.useContext(AuthContext);
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        auth.token ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
+  return auth.token ? children : <Navigate to="/login" replace />;
 };
 
 function App() {
@@ -27,13 +20,20 @@ function App() {
       <Router>
         <Navbar />
         <div className="container">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
             {/* Add more routes as needed */}
-          </Switch>
+          </Routes>
         </div>
       </Router>
     </AuthProvider>

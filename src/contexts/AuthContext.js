@@ -1,6 +1,6 @@
 // frontend/src/contexts/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 export const AuthContext = createContext();
 
@@ -12,9 +12,9 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (auth.token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
     } else {
-      delete axios.defaults.headers.common['Authorization'];
+      delete api.defaults.headers.common['Authorization'];
     }
   }, [auth.token]);
 

@@ -1,6 +1,7 @@
 // frontend/src/components/Jobs/JobForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
+import { toast } from 'react-toastify';
 
 const JobForm = () => {
   const [form, setForm] = useState({
@@ -24,8 +25,9 @@ const JobForm = () => {
     setSuccess('');
 
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`, form);
+      await api.post('/api/jobs', form);
       setSuccess('Job added successfully');
+      toast.success('Job added successfully!');
       setForm({
         company: '',
         position: '',
@@ -35,6 +37,7 @@ const JobForm = () => {
       });
     } catch (err) {
       setError('Failed to add job');
+      toast.error('Failed to add job');
     }
   };
 
@@ -45,13 +48,31 @@ const JobForm = () => {
       {success && <p className="success">{success}</p>}
       <form onSubmit={handleSubmit}>
         <label>Company:</label>
-        <input type="text" name="company" value={form.company} onChange={handleChange} required />
+        <input 
+          type="text" 
+          name="company" 
+          value={form.company} 
+          onChange={handleChange} 
+          required 
+        />
 
         <label>Position:</label>
-        <input type="text" name="position" value={form.position} onChange={handleChange} required />
+        <input 
+          type="text" 
+          name="position" 
+          value={form.position} 
+          onChange={handleChange} 
+          required 
+        />
 
         <label>Application Date:</label>
-        <input type="date" name="application_date" value={form.application_date} onChange={handleChange} required />
+        <input 
+          type="date" 
+          name="application_date" 
+          value={form.application_date} 
+          onChange={handleChange} 
+          required 
+        />
 
         <label>Status:</label>
         <select name="status" value={form.status} onChange={handleChange}>

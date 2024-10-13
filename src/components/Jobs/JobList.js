@@ -1,6 +1,7 @@
 // frontend/src/components/Jobs/JobList.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
+import { toast } from 'react-toastify';
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
@@ -8,10 +9,11 @@ const JobList = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`);
+      const res = await api.get('/api/jobs');
       setJobs(res.data);
     } catch (err) {
       setError('Failed to fetch jobs');
+      toast.error('Failed to fetch jobs');
     }
   };
 
@@ -21,10 +23,12 @@ const JobList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${id}`);
+      await api.delete(`/api/jobs/${id}`);
       setJobs(jobs.filter(job => job.id !== id));
+      toast.success('Job deleted successfully!');
     } catch (err) {
       setError('Failed to delete job');
+      toast.error('Failed to delete job');
     }
   };
 
