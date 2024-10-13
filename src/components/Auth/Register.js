@@ -1,8 +1,9 @@
 // frontend/src/components/Auth/Register.js
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const { login } = useContext(AuthContext);
@@ -24,38 +25,47 @@ const Register = () => {
     setError('');
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/register`, form);
+      const res = await api.post('/api/auth/register', form);
       login(res.data.token, res.data.user);
+      toast.success('Registration successful!');
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
+      toast.error(err.response?.data?.message || 'Registration failed');
     }
   };
 
   return (
     <div className="auth-form">
-      <h2>Register</h2>
+      <h2 style={{ marginTop: '20px' }}>Register</h2>
+
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input 
-          type="text" 
-          name="username" 
-          value={form.username} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Username:</label>
+          <input 
+            type="text" 
+            name="username" 
+            className="form-control" 
+            value={form.username} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <label>Password:</label>
-        <input 
-          type="password" 
-          name="password" 
-          value={form.password} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Password:</label>
+          <input 
+            type="password" 
+            name="password" 
+            className="form-control" 
+            value={form.password} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" className="btn btn-primary w-100">Register</button>
       </form>
     </div>
   );

@@ -43,49 +43,73 @@ const JobForm = () => {
 
   return (
     <div className="job-form">
-      <h3>Add New Job Application</h3>
+      
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
       <form onSubmit={handleSubmit}>
-        <label>Company:</label>
-        <input 
-          type="text" 
-          name="company" 
-          value={form.company} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Company:</label>
+          <input 
+            type="text" 
+            name="company" 
+            className="form-control" 
+            value={form.company} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <label>Position:</label>
-        <input 
-          type="text" 
-          name="position" 
-          value={form.position} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Position:</label>
+          <input 
+            type="text" 
+            name="position" 
+            className="form-control" 
+            value={form.position} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <label>Application Date:</label>
-        <input 
-          type="date" 
-          name="application_date" 
-          value={form.application_date} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Application Date:</label>
+          <input 
+            type="date" 
+            name="application_date" 
+            className="form-control" 
+            value={form.application_date} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <label>Status:</label>
-        <select name="status" value={form.status} onChange={handleChange}>
-          <option>Applied</option>
-          <option>Interview</option>
-          <option>Offer</option>
-          <option>Rejected</option>
-        </select>
+        <div className="mb-3">
+          <label className="form-label">Status:</label>
+          <select 
+            name="status" 
+            className="form-select" 
+            value={form.status} 
+            onChange={handleChange}
+          >
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+        </div>
 
-        <label>Notes:</label>
-        <textarea name="notes" value={form.notes} onChange={handleChange}></textarea>
+        <div className="mb-3">
+          <label className="form-label">Notes:</label>
+          <textarea 
+            name="notes" 
+            className="form-control" 
+            value={form.notes} 
+            onChange={handleChange}
+            rows="3"
+          ></textarea>
+        </div>
 
-        <button type="submit">Add Job</button>
+        <button type="submit" className="btn btn-primary w-100">Add Job</button>
       </form>
     </div>
   );

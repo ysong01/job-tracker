@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Dashboard from './pages/Dashboard';
+import JobList from './components/Jobs/JobList';
+import JobForm from './components/Jobs/JobForm';
 
 const PrivateRoute = ({ children }) => {
   const { auth } = React.useContext(AuthContext);

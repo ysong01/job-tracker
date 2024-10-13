@@ -37,28 +37,34 @@ const Login = () => {
 
   return (
     <div className="auth-form">
-      <h2>Login</h2>
+      <h2 style={{ marginTop: '20px' }}>Login</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input 
-          type="text" 
-          name="username" 
-          value={form.username} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Username:</label>
+          <input 
+            type="text" 
+            name="username" 
+            className="form-control" 
+            value={form.username} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <label>Password:</label>
-        <input 
-          type="password" 
-          name="password" 
-          value={form.password} 
-          onChange={handleChange} 
-          required 
-        />
+        <div className="mb-3">
+          <label className="form-label">Password:</label>
+          <input 
+            type="password" 
+            name="password" 
+            className="form-control" 
+            value={form.password} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" className="btn btn-success w-100">Login</button>
       </form>
     </div>
   );

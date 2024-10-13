@@ -5,7 +5,7 @@ import JobForm from '../components/Jobs/JobForm';
 
 const Dashboard = () => (
   <div className="dashboard">
-    <h2>Your Job Applications</h2>
+    <h2 style={{ marginTop: '20px' }}>Your Applications:</h2>
     <JobForm />
     <JobList />
   </div>

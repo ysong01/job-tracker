@@ -22,6 +22,8 @@ const JobList = () => {
   }, []);
 
   const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this job?')) return;
+
     try {
       await api.delete(`/api/jobs/${id}`);
       setJobs(jobs.filter(job => job.id !== id));
@@ -38,33 +40,41 @@ const JobList = () => {
       {jobs.length === 0 ? (
         <p>No job applications found.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Company</th>
-              <th>Position</th>
-              <th>Application Date</th>
-              <th>Status</th>
-              <th>Notes</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {jobs.map(job => (
-              <tr key={job.id}>
-                <td>{job.company}</td>
-                <td>{job.position}</td>
-                <td>{new Date(job.application_date).toLocaleDateString()}</td>
-                <td>{job.status}</td>
-                <td>{job.notes}</td>
-                <td>
-                  {/* Implement Edit functionality as needed */}
-                  <button onClick={() => handleDelete(job.id)}>Delete</button>
-                </td>
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
+            <thead className="table-dark">
+              <tr>
+                <th>Company</th>
+                <th>Position</th>
+                <th>Application Date</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {jobs.map(job => (
+                <tr key={job.id}>
+                  <td>{job.company}</td>
+                  <td>{job.position}</td>
+                  <td>{new Date(job.application_date).toLocaleDateString()}</td>
+                  <td>{job.status}</td>
+                  <td>{job.notes}</td>
+                  <td>
+                    {/* Placeholder for Edit functionality */}
+                    <button 
+                      className="btn btn-danger btn-sm me-2"
+                      onClick={() => handleDelete(job.id)}
+                    >
+                      Delete
+                    </button>
+                    {/* Add Edit button if needed */}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
