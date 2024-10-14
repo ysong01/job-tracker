@@ -1,6 +1,6 @@
 // frontend/src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import AuthProvider, { AuthContext } from './contexts/AuthContext';
 import Navbar from './components/Layout/Navbar';
@@ -8,8 +8,6 @@ import Home from './pages/Home';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Dashboard from './pages/Dashboard';
-import JobList from './components/Jobs/JobList';
-import JobForm from './components/Jobs/JobForm';
 
 const PrivateRoute = ({ children }) => {
   const { auth } = React.useContext(AuthContext);
